@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  minio:
+    build:
+      context: .
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - tmpfs:/data
+    command: server /data --console-address ":9001"
+    container_name: minio
+
+  generator:
+    build: 
+      context: data_gen/.
+    
+    
+
+volumes: 
+  tmpfs: 
+    driver_opts:
+      o: "size=100m"
+      device: tmpfs
+      type: tmpfs
